@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Salary Management App</title>
+</head>
+<body>
+    <h1>Employee Salary Management</h1>
+
+    <h2>Add Employee</h2>
+    <form method="POST" action="/add_employee">
+        Name: <input type="text" name="name" required>
+        Salary: <input type="number" step="0.01" name="salary" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h2>Employees</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Advances</th>
+            <th>Absents</th>
+            <th>Actions</th>
+        </tr>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ emp[1] }}</td>
+            <td>{{ emp[2] }}</td>
+            <td>{{ emp[3] }}</td>
+            <td>{{ emp[4] }}</td>
+            <td>
+                <form method="POST" action="/give_advance/{{ emp[0] }}">
+                    <input type="number" step="0.01" name="amount" placeholder="Advance" required>
+                    <button type="submit">Give Advance</button>
+                </form>
+                <form method="POST" action="/mark_absent/{{ emp[0] }}">
+                    <input type="number" name="days" placeholder="Days" required>
+                    <button type="submit">Mark Absent</button>
+                </form>
+                <a href="/calculate_salary/{{ emp[0] }}">Calculate Salary</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
